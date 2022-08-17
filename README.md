@@ -1,73 +1,114 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Challenge
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+- Add new employee.
+- Soft deleted an employee.
+- Update an employee.
+- Get paginated list of employees.
+- Get list of deleted employees.
+- Integrate swagger.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# Pre-Requisite
 
-## Description
+- mongodb-memory-server: 8.8.0
+- mongoose: 6.5.1
+- await-of: 3.1.1
+- swagger: 6.0.5
+- class-validator: 0.13.2
+- class-transformer: 0.5.1
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+# My Solution
 
-## Installation
+- Integrated swagger for API documentation which is available at http://localhost:3000/swagger
+- Created CRUD endpoints for managing the employees.
+- Used mongoose for interacting with the MongoDB database.
 
-```bash
-$ npm install
+# Setup Steps
+
+Install dependencies
+
+- `npm i`
+
+Update env file to update the MONOGODB_URI
+
+- `MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.8p1qcg5.mongodb.net/?retryWrites=true&w=majority"`
+
+Start the Server
+
+- `npm run start:dev`
+
+# Test
+
+Run Unit Test:
+
+- `npm run test`
+
+Run Test Coverage:
+
+- `npm run test:cov`
+
+# Usage
+
+- [Postman Collection](/Employee-Management-System.postman_collection.json)
+
+## Create Employee
+
+```
+POST http://localhost:3000/employees
+
+Body
+{
+    "name": <employeename>,
+    "email": <email@xyz.com>,
+    "phoneNumber": xxxxxxxxxx,
+    "dateOfBirth": <YYYY-MM-DDTHH:MM:SS>,
+    "dateOfEmployement": <YYYY-MM-DDTHH:MM:SS>,
+    "address": {
+        "city": <city>,
+        "zipCode": xxxxxx,
+        "line1": <address line 1>,
+        "line2": <address line 2>
+    }
+}
+
 ```
 
-## Running the app
+## Get Employee
 
-```bash
-# development
-$ npm run start
+```
+GET http://localhost:3000/employees/{id}
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
 
-## Test
+## Update Employee
 
-```bash
-# unit tests
-$ npm run test
+```
+PATCH http://localhost:3000/employees/{id}
 
-# e2e tests
-$ npm run test:e2e
+Body
+{
+    "name": <updatedEmployeeName>
+}
 
-# test coverage
-$ npm run test:cov
+
 ```
 
-## Support
+## Delete Employee
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```
+DELETE http://localhost:3000/employees/{id}
 
-## Stay in touch
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Get all Employees
 
-## License
+```
+GET http://localhost:3000/employees?page=1
 
-Nest is [MIT licensed](LICENSE).
+```
+
+## Get all Deleted Employees
+
+```
+GET http://localhost:3000/employees/deleted?page=1
+
+```
